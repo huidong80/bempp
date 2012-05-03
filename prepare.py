@@ -38,14 +38,13 @@ file_list={'trilinos':('trilinos-10.10.2-Source.tar.gz','http://trilinos.sandia.
 
 rename_list={'trilinos-10.10.2-Source':'trilinos',
 	     'armadillo-3.0.3':'armadillo',
-	     'dune-common-2.1.0':'dune-common',
-	     'dune-grid-2.1.0':'dune-grid',
-	     'dune-localfunctions-2.1.0':'dune-localfunctions'}
+	     'dune-common-2.1.0':'dune/dune-common',
+	     'dune-grid-2.1.0':'dune/dune-grid',
+	     'dune-localfunctions-2.1.0':'dune/dune-localfunctions'}
 
 patch_list=[('dune-grid.patch','dune-grid/dune/grid/utility'),
 	    ('Thyra_BelosLinearOpWithSolve_def.patch','trilinos/packages/stratimikos/adapters/belos/src'),
 	    ('armadillo_config.patch','armadillo/include/armadillo_bits')]
-
 	
 
 ###########################
@@ -139,6 +138,15 @@ def apply_patches():
 	    os.chdir(cwd)
 	
 
+def install_cmake_files():
+    src=module_path()+"/patch/cmake/"
+    dst=module_path()
+    os.copy(src+"dune-common.cmake",dst+"/dune/dune-common/CMakeLists.txt")
+    os.copy(src+"dune-grid.cmake",dst+"/dune/dune-grid/CMakeLists.txt")
+    os.copy(src+"dune-foamgrid.cmake",dst+"/dune/dune-foamgrid/CMakeLists.txt")
+    os.copy(src+"dune-localfunctions.cmake",dst+"/dune/dune-localfunctions/CMakeLists.txt")
+    os.copy(src+"trilinos.cmake",dst+"/trilinos/CMakeLists.txt")
+
 ###########################
 
 if __name__ == "__main__":
@@ -147,6 +155,6 @@ if __name__ == "__main__":
 	extract_all_files()
 	rename_directories()
 	apply_patches()
-
+	install_cmake_files()
 
 
