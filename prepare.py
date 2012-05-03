@@ -43,7 +43,8 @@ rename_list={'trilinos-10.10.2-Source':'trilinos',
 	     'dune-localfunctions-2.1.0':'dune-localfunctions'}
 
 patch_list=[('dune-grid.patch','dune-grid/dune/grid/utility'),
-	    ('Thyra_BelosLinearOpWithSolve_def.patch','trilinos/packages/stratimikos/adapters/belos/src')]
+	    ('Thyra_BelosLinearOpWithSolve_def.patch','trilinos/packages/stratimikos/adapters/belos/src'),
+	    ('armadillo_config.patch','armadillo/include/armadillo_bits')]
 
 	
 
