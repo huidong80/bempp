@@ -6,5 +6,5 @@
 #    )
 #ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/dune.cmake)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dune)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/trilinos.cmake)
