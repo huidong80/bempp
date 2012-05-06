@@ -19,16 +19,47 @@ include_directories(${CMAKE_BINARY_DIR}/include/common)
 # Find all source and header files
 file(GLOB_RECURSE LIB_SOURCES *.cpp)
 file(GLOB_RECURSE LIB_HEADERS *.hpp)
-file(GLOB_RECURSE DUNE_FOAMGRID_HEADERS ${CMAKE_SOURCE_DIR}/contrib/dune/dune-foamgrid/dune/foamgrid/*.hh)
-file(GLOB_RECURSE DUNE_GRID_HEADERS ${CMAKE_SOURCE_DIR}/contrib/dune/dune-grid/dune/grid/*.hh)
-file(GLOB_RECURSE DUNE_COMMON_HEADERS ${CMAKE_SOURCE_DIR}/contrib/dune/dune-common/dune/common/*.hh)
-find_file(ARMA_HEADER armadillo ${ARMADILLO_INCLUDE_DIRS})
 
-#add_definitions(-DCOMPILE_FOR_DOUBLE)
-#add_definitions(-DCOMPILE_FOR_FLOAT)
+# Add OpenMP support (only needed for AHMED)
+if (WITH_AHMED)
+  include(FindOpenMP)
+  if (OpenMP_FOUND)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+  endif (OpenMP_FOUND)
+endif (WITH_AHMED)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp")
+
+
+# Add include directories
+
+# Boost
+include_directories(${BOOST_INCLUDE_DIR})
+
+# ARMADILLO
+include_directories(${ARMADILLO_INCLUDE_DIR})
+
+# TBB
+include_directories(${TBB_INCLUDE_DIR})
+
+# AHMED
+if (WITH_AHMED)
+   include_directories(${AHMED_INCLUDE_DIR})
+endif ()
+
+# Dune
+include_directories(${CMAKE_SOURCE_DIR}/contrib/dune/dune-common)
+include_directories(${CMAKE_SOURCE_DIR}/contrib/dune/dune-grid)
+include_directories(${CMAKE_SOURCE_DIR}/contrib/dune/dune-localfunctions)
+include_directories(${CMAKE_SOURCE_DIR}/contrib/dune/dune-foamgrid)
+
+# Trilinos
+
+if (BEMPP_TRILINOS)
+  include(${CMAKE_SOURCE_DIR}/cmake/trilinos_headers.cmake)
+else ()
+  include_directories(${Trilinos_INCLUDE_DIRS} ${Trilinos_TPL_INCLUDE_DIRS})
+endif (BEMPP_TRILINOS)
 
 # Headers are ignored by make, but their list is used by IDEs
 # like Qt Creator and Visual Studio to generate project file list.
@@ -38,7 +69,7 @@ add_library(bempp SHARED
 	${DUNE_FOAMGRID_HEADERS}
 	${DUNE_GRID_HEADERS}
 	${DUNE_COMMON_HEADERS}
-	${ARMA_HEADER}
+        ${DUNE_LOCALFUNCTIONS_HEADERS}
 	)
 
 target_link_libraries (bempp
@@ -46,7 +77,6 @@ target_link_libraries (bempp
 	${LIB_DUNE_COMMON}
 	${LIB_DUNE_GRID}
 	${OPENCL_LIBRARIES}
-	${ARMADILLO_LIBRARIES}
 	)
 
 # TBB

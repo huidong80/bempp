@@ -147,6 +147,8 @@ def install_cmake_files():
     shutil.copy(src+"dune-localfunctions.cmake",dst+"/dune/dune-localfunctions/CMakeLists.txt")
     shutil.copy(src+"trilinos.cmake",dst+"/trilinos/CMakeLists.txt")
 
+    
+
 ###########################
 
 if __name__ == "__main__":
@@ -156,5 +158,6 @@ if __name__ == "__main__":
 	rename_directories()
 	apply_patches()
 	install_cmake_files()
+        print "Please enter the subdirectory contrib and run \n cmake . && make install \n to install the dependencies"
 
 

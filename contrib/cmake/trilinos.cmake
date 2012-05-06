@@ -1,8 +1,3 @@
-# Threading building blocks
-set(TBB_INCLUDE_DIR "" CACHE STRING "Full path to Intel TBB include directory")
-set(TBB_LIBRARY_DIR "" CACHE STRING "Full path to the directory with Intel TBB libraries")
-find_library(TBB_LIBRARY_DEBUG tbb_debug ${TBB_LIBRARY_DIR})
-find_library(TBB_LIBRARY_RELEASE tbb ${TBB_LIBRARY_DIR})
 
 set(TPL_TBB_LIBRARIES ${TBB_LIBRARY_RELEASE} CACHE STRING "" FORCE)
 set(TPL_TBB_INCLUDE_DIRS ${TBB_INCLUDE_DIR} CACHE STRING "" FORCE)
