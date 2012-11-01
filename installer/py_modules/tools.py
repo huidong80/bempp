@@ -384,6 +384,7 @@ def checkInstallUpdates(root,config):
 def installUpdates(root,config):
     """Install updates previously merged into the source tree."""
 
+    print "ABCDEF"
     build_dir = config.get("Main","build_dir")
     build_jobs = config.get("Main","build_jobs")
     cmake_exe = config.get("CMake","exe")
