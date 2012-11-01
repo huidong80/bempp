@@ -353,7 +353,7 @@ def checkInstallUpdates(root,config):
 
 
     (major,minor,patch) = getVersion(root)
-    branch = "release_"+str(major)+"."+str(minor)+"_bugfixes_resume_installer"
+    branch = "release_"+str(major)+"."+str(minor)+"_bugfixes_resume_installer_scratch"
     try:
         check_output("git fetch origin",shell=True,stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError, ex:
