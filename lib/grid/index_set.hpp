@@ -26,6 +26,8 @@
 namespace Bempp
 {
 
+// New comment
+
 /** \cond FORWARD_DECL */
 template<int codim> class Entity;
 /** \endcond */
