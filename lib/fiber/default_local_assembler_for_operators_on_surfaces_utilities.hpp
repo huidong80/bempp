@@ -31,8 +31,10 @@
 namespace Fiber
 {
 
+/** \cond FORWARD_DECL */
 template <typename BasisFunctionType> class Basis;
 template <typename CoordinateType> class RawGridGeometry;
+/** \endcond */
 
 // These are internal routines used by the
 // DefaultLocalAssemblerFor*OperatorsOnSurfaces classes. They are not part of

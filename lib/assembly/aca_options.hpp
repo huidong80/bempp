@@ -91,7 +91,6 @@ struct AcaOptions
      *     the most straightforward way possible, i.e. to approximate blocks of
      *     the operator \f$\mathcal A\f$ discretized with the basis functions of
      *     \f$U\f$ and \f$V\f$.
-     *
      *  2. If \p mode is set to \p LOCAL_ASSEMBLY, the discretization \f$A\f$ of
      *     \f$\mathcal A\f$ is constructed as a sum
      *
@@ -108,7 +107,7 @@ struct AcaOptions
      *     obviously only a single copy is stored in memory). This assembly
      *     mode takes advantage of the fact that ACA becomes more efficient as
      *     the support of test and trial functions is reduced. Thus, assembly
-     *     in LOCAL_ASSEMBLY mode is often much faster than in GLOBAL_ASSEMBLY
+     *     in \p LOCAL_ASSEMBLY mode is often much faster than in \p GLOBAL_ASSEMBLY
      *     mode. However, this comes at the price of increased memory use,
      *     since the matrices \f$A_i\f$ are typically much bigger than \f$A\f$.
      *     In addition, the
@@ -125,17 +124,16 @@ struct AcaOptions
      *     and helmholtz3dHypersingularBoundaryOperator(), for explicit
      *     expressions used to represent these operators in the \p
      *     LOCAL_ASSEMBLY mode.
-     *
      *  3. The \p HYBRID_ASSEMBLY mode is available for operators whose
      *     weak form can be written as
      *
-     *     \[
+     *     \f[
      *         \int_\Gamma \int_\Sigma
      *         f(x) \, K(x, y) \, g(y) \,
      *         \mathrm{d}\Gamma(x) \,\mathrm{d}\Sigma(y),
-     *     \]
+     *     \f]
      *
-     *     where \f$f(x)\f$ and \f$g(y)\$ are scalar basis functions of \f$U\f$
+     *     where \f$f(x)\f$ and \f$g(y)\f$ are scalar basis functions of \f$U\f$
      *     and \f$V\f$ (*not* any transformations of them, i.e. not their
      *     surface curls, divs etc.), *at least as long as the supports of
      *     \f$f(x)\f$ and \f$g(y)\f$ do not overlap*. (Note that this is
@@ -157,8 +155,8 @@ struct AcaOptions
      *     representation of the block in the original bases of \f$U\f$ and
      *     \f$V\f$.
      *
-     *     This mode combines the advantages of LOCAL_ASSEMBLY (fast matrix
-     *     construction) and GLOBAL_ASSEMBLY (low memory consumption,
+     *     This mode combines the advantages of \p LOCAL_ASSEMBLY (fast matrix
+     *     construction) and \p GLOBAL_ASSEMBLY (low memory consumption,
      *     representation in the form of a single H-matrix). However, at
      *     present it cannot be used for Maxwell operators, which require
      *     vector basis functions.
@@ -185,16 +183,16 @@ struct AcaOptions
      *
      *  This parameter controls what happens if an integral operator is
      *  requested to construct its discrete weak form in an ACA mode
-     *  (LOCAL_ASSEMBLY or HYBRID_ASSEMBLY) it does not support.
+     *  (\p LOCAL_ASSEMBLY or \p HYBRID_ASSEMBLY) it does not support.
      *
-     *  If reactionToUnsupportedMode is set to IGNORE, the operator silently
-     *  assembles its discrete weak form in the GLOBAL_ASSEMBLY mode.
+     *  If #reactionToUnsupportedMode is set to \p IGNORE, the operator silently
+     *  assembles its discrete weak form in the \p GLOBAL_ASSEMBLY mode.
      *
-     *  It reactionToUnsupportedMode is set to WARNING (default), the operator
+     *  It #reactionToUnsupportedMode is set to \p WARNING (default), the operator
      *  emits a warning message to the standard output and assembles its
-     *  discrete weak form in the GLOBAL_ASSEMBLY mode.
+     *  discrete weak form in the \p GLOBAL_ASSEMBLY mode.
      *
-     *  If reactionToUnsupportedMode is set to ERROR, the operator throws an
+     *  If #reactionToUnsupportedMode is set to \p ERROR, the operator throws an
      *  exception.
      */
     ReactionToUnsupportedMode reactionToUnsupportedMode;

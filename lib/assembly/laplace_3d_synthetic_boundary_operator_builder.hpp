@@ -9,10 +9,12 @@
 namespace Bempp
 {
 
+/** \cond FORWARD_DECL */
 template <typename BasisFunctionType> class Space;
 template <typename BasisFunctionType, typename ResultType>
 class BoundaryOperator;
 template <typename BasisFunctionType, typename ResultType> class Context;
+/** \endcond */
 
 template <typename BasisFunctionType, typename ResultType>
 BoundaryOperator<BasisFunctionType, ResultType>

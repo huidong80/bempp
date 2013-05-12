@@ -107,30 +107,30 @@ public:
     /** \brief Return a shared pointer to an appropriate counterpart to this
      *  space, with basis functions extending only over single elements.
      *
-     *  Let \f$S = span_{n=1}^N f_n\f$ denote the function space represented by
-     *  this object, with \f$f_n\f$ its basis functions.
+     *  Let \f$S = \operatorname{span}_{n=1}^N f_n\f$ denote the
+     *  function space represented by this object, with \f$f_n\f$ its
+     *  basis functions.
      *
-     *  If the functions \f$f_n\f$ are scalar-valued, discontinuousSpace()
-     *  should return a shared pointer to an object representing a space \f$T =
-     *  span_{m=1}^M g_m\f$ with basis functions \f$g_m\f$ such that:
+     *  If the functions \f$f_n\f$ are scalar-valued,
+     *  discontinuousSpace() should return a shared pointer to an
+     *  object representing a space \f$T = \operatorname{span}_{m=1}^M
+     *  g_m\f$ with basis functions \f$g_m\f$ such that:
      *
      *  1. \f$T = S\f$.
-     *
      *  2. The support of each basis function \f$g_m\f$ is a single element.
-     *
      *  3. Each function \f$f_n\f$ has a unique representation in the basis of
      *     \f$\{g_m\}_{m=1}^M\f$ and each function \f$g_m\f$ contributes to exactly
      *     one function \f$f_n\f$.
      *
      *  If the values of functions \f$f_n\f$ are vectors with \f$d\f$
-     *  components, discontinuousSpace() should return a shared pointer to an
-     *  object representing a space \f$T = span_{m=1}^M g_m\f$ of with
-     *  *scalar-valued* basis functions \f$g_m\f$ such that
+     *  components, discontinuousSpace() should return a shared
+     *  pointer to an object representing a space \f$T =
+     *  \operatorname{span}_{m=1}^M g_m\f$ of with *scalar-valued*
+     *  basis functions \f$g_m\f$ such that
      *
-     *  1. For each \f$i = 1, 2, \cdots, d\f$ it holds that \f$T \superset
-     *     span_{n=1}^N (f_n)_i\f$, where \f$(f_n)_i\f$ denotes the \f$i\f$th
-     *     component of \f$f_n\f$.
-     *
+     *  1. For each \f$i = 1, 2, \cdots, d\f$ it holds that \f$T \supset
+     *     \operatorname{span}_{n=1}^N (f_n)_i\f$, where \f$(f_n)_i\f$ denotes
+     *     the \f$i\f$th component of \f$f_n\f$.
      *  2. The support of each basis function \f$g_m\f$ is a single element.
      *
      *  \param[in] self This must be a shared pointer to <tt>*this</tt>.

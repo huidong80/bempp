@@ -30,9 +30,11 @@
 namespace Bempp
 {
 
+/** \cond FORWARD_DECL */
 template <typename ValueType> class DiscreteBoundaryOperator;
 template <typename BasisFunctionType, typename ResultType> class GridFunction;
 template <typename BasisFunctionType> class Space;
+/** \endcond */
 
 /** \brief Assembled potential operator.
  *
