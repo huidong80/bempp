@@ -24,16 +24,19 @@
 #include "boundary_operator.hpp"
 #include "../common/common.hpp"
 #include "symmetry.hpp"
+#include "../fiber/scalar_traits.hpp"
 
 namespace Bempp {
 
-template <typename BasisFunctionType, typename ResultType>
-BoundaryOperator<BasisFunctionType, ResultType>
+template <typename BasisFunctionType>
+BoundaryOperator<BasisFunctionType, typename Fiber::ScalarTraits<BasisFunctionType>::ComplexType>
 helmholtz3dOsrcDtnOperator(
-        const shared_ptr<const Context<BasisFunctionType, ResultType> >& context,
+        const shared_ptr<const Context<BasisFunctionType,
+            typename Fiber::ScalarTraits<BasisFunctionType>::ComplexType> >& context,
         const shared_ptr<const Space<BasisFunctionType> >& domain,
         const shared_ptr<const Space<BasisFunctionType> >& range,
         const shared_ptr<const Space<BasisFunctionType> >& dualToRange,
+        int numberOfPadeTerms,
         const std::string& label = "",
         int symmetry = NO_SYMMETRY);
 

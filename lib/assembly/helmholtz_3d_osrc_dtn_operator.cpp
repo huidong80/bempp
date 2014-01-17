@@ -20,8 +20,8 @@
 
 #include "helmholtz_3d_osrc_dtn_operator.hpp"
 #include "abstract_boundary_operator.hpp"
-#include "../fiber/scalar_traits.hpp"
 #include "laplace_beltrami_3d_operator.hpp"
+#include "../fiber/explicit_instantiation.hpp"
 
 namespace Bempp {
 
@@ -36,9 +36,9 @@ class Helmholtz3dOsrcDtnOperator :
 public:
 
     typedef AbstractBoundaryOperator<BasisFunctionType_,typename Fiber::ScalarTraits<BasisFunctionType_>::ComplexType> Base;
-    typedef Base::BasisFunctionType BasisFunctionType;
-    typedef Base::ResultType ResultType;
-    typedef Base::CoordinateType CoordinateType;
+    typedef typename Base::BasisFunctionType BasisFunctionType;
+    typedef typename Base::ResultType ResultType;
+    typedef typename Base::CoordinateType CoordinateType;
 
     Helmholtz3dOsrcDtnOperator(
             const shared_ptr<const Space<BasisFunctionType> >& domain,
@@ -60,7 +60,13 @@ protected:
     virtual shared_ptr<DiscreteBoundaryOperator<ResultType> >
     assembleWeakFormImpl(const Context<BasisFunctionType, ResultType> &context) const {
 
-
+        BoundaryOperator<BasisFunctionType,ResultType> laplaceBeltrami =
+                laplaceBeltrami3dOperator<BasisFunctionType,ResultType>(
+                                          make_shared_from_const_ref(context),
+                                          this->domain(),
+                                          this->range(),
+                                          this->dualToRange());
+        return laplaceBeltrami.abstractOperator()->assembleWeakForm(context);
 
 
     }
@@ -71,7 +77,6 @@ private:
 
     int m_numberOfPadeTerms;
 
-
 };
 
 
@@ -79,16 +84,44 @@ private:
 
 
 
-template <typename BasisFunctionType, typename ResultType>
-BoundaryOperator<BasisFunctionType, ResultType>
+template <typename BasisFunctionType>
+BoundaryOperator<BasisFunctionType, typename Fiber::ScalarTraits<BasisFunctionType>::ComplexType>
 helmholtz3dOsrcDtnOperator(
-        const shared_ptr<const Context<BasisFunctionType, ResultType> >& context,
+        const shared_ptr<const Context<BasisFunctionType,
+            typename Fiber::ScalarTraits<BasisFunctionType>::ComplexType> >& context,
         const shared_ptr<const Space<BasisFunctionType> >& domain,
         const shared_ptr<const Space<BasisFunctionType> >& range,
         const shared_ptr<const Space<BasisFunctionType> >& dualToRange,
+        int numberOfPadeTerms,
         const std::string& label,
-        int symmetry) {}
+        int symmetry)
+{
 
+    typedef typename Fiber::ScalarTraits<BasisFunctionType>::ComplexType ResultType;
+    typedef AbstractBoundaryOperator<BasisFunctionType,ResultType> AbstractOp;
+    typedef Helmholtz3dOsrcDtnOperator<BasisFunctionType> AbstractOsrcOp;
+
+    shared_ptr<AbstractOp> abstractOsrcOperator(new AbstractOsrcOp(
+                                                    domain,range,dualToRange,
+                                                    numberOfPadeTerms,label,symmetry));
+
+
+    return BoundaryOperator<BasisFunctionType,ResultType>(context,abstractOsrcOperator);
+
+}
+
+
+#define INSTANTIATE_NONMEMBER_CONSTRUCTOR(BASIS) \
+    template BoundaryOperator<BASIS, typename Fiber::ScalarTraits< BASIS >::ComplexType > \
+    helmholtz3dOsrcDtnOperator( \
+        const shared_ptr<const Context<BASIS, typename Fiber::ScalarTraits< BASIS >::ComplexType> >&, \
+        const shared_ptr<const Space<BASIS> >&, \
+        const shared_ptr<const Space<BASIS> >&, \
+        const shared_ptr<const Space<BASIS> >&, \
+        int numberOfPadeTerms, \
+        const std::string&, \
+        int)
+FIBER_ITERATE_OVER_BASIS_TYPES(INSTANTIATE_NONMEMBER_CONSTRUCTOR);
 
 
 }
