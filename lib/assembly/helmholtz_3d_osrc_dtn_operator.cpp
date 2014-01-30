@@ -22,11 +22,87 @@
 #include "abstract_boundary_operator.hpp"
 #include "laplace_beltrami_3d_operator.hpp"
 #include "../fiber/explicit_instantiation.hpp"
+#include "discrete_boundary_operator.hpp"
+#include "Komplex_LinearProblem.h"
 
 namespace Bempp {
 
 namespace {
 
+
+//template <typename ValueType>
+//void solveWithAmesos(Komplex_LinearProblem& problem,
+//                     Amesos_BaseSolver& solver,
+//                     arma::Mat<ValueType>& solution,
+//                     const arma::Mat<ValueType>& rhs);
+
+//template <>
+//void solveWithAmesos<std::complex<double> >(Komplex_LinearProblem& problem,
+//                                            Amesos_BaseSolver& solver,
+//                                            arma::Mat<std::complex<double> >& armaSolution,
+//                                            const arma::Mat<std::complex<double> >& armaRhs)
+//{
+
+//    const size_t rowCount = armaRhs.n_rows;
+//    assert(rowCount == armaSolution.n_rows);
+//    const size_t rhsCount = armaRhs.n_cols;
+//    assert(rhsCount == armaSolution.n_cols);
+
+
+
+
+//    Epetra_Map map((int) rowCount, 0 /* base index */, Epetra_SerialComm());
+//    Epetra_MultiVector solution(View, map, armaSolution.memptr(),
+//                                rowCount, rhsCount);
+//    Epetra_MultiVector rhs(View, map, const_cast<double*>(armaRhs.memptr()),
+//                           rowCount, rhsCount);
+//    problem.SetLHS(&solution);
+//    problem.SetRHS(&rhs);
+
+//    if (solver.Solve() != 0)
+//        throw std::runtime_error("solveWithAmesos(): solve failed");
+
+
+
+//}
+
+
+
+//template <typename ValueType>
+//class DiscreteHelmholtz3dOsrcDtnOperator :
+//        public DiscreteBoundaryOperator<ValueType>
+//{
+//public:
+
+//    typedef DiscreteBoundaryOperator<ValueType> Base;
+
+//    DiscreteHelmholtz3dOsrcDtnOperator(const shared_ptr<const Epetra_CrsMatrix>& identity,
+//                                       const shared_ptr<const Epetra_CrsMatrix>& laplaceBeltrami,
+//                                       int numberOfPadeTerms):
+
+//        m_identity(identity),
+//        m_laplaceBeltrami(laplaceBeltrami),
+//        m_numberOfPadeTerms(numberOfPadeTerms) {}
+
+//    virtual unsigned int rowCount() const {
+
+//        return m_identity->NumGlobalRows();
+//    }
+
+//    virtual unsigned int columnCount() const {
+
+//        return m_identity->NumGlobalCols();
+
+//    }
+
+//private:
+
+//    const shared_ptr<const Epetra_CrsMatrix>& m_identity;
+//    const shared_ptr<const Epetra_CrsMatrix>& m_laplaceBeltrami;
+//    int m_numberOfPadeTerms;
+
+
+//}
 
 template <typename BasisFunctionType_>
 class Helmholtz3dOsrcDtnOperator :
